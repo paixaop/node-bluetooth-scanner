@@ -20,7 +20,7 @@ The callback function will be called for each device found.
 
 # Credits
 
-Based on BLE-Scanner from Martin Grädler
+Based on BLE-Scanner from Martin Gradler
 
 # License
 
