@@ -15,6 +15,7 @@ BluetoothScanner = (function() {
 
   init = function(hcidev, callback) {
     
+    // Bring selected device UP
     hciconfig = spawn('hciconfig', [hcidev, 'up']);
     
     return hciconfig.on("exit", function(code) {
@@ -22,31 +23,40 @@ BluetoothScanner = (function() {
       
       if (code !== 0) {
         
-        return console.log("HCICONFIG: failed to bring up device " + hcidev);
+        // Could not get the device UP, maybe due to permissions, should run with sudo.
+        throw new Error('hciconfig: failed to bring up device ' + hcidev +'. Try running with sudo');
       
       } else {
         
-        console.log("HCICONFIG: succesfully brought up device " + hcidev);
+        console.log("hciconfig: succesfully brought up device " + hcidev);
+        
+        // Kill any previous hcitool command
         clearHciTool = spawn("killall", ["hcitool"]);
         
         clearHciTool.on("exit", function(code) {
-          console.log("KILL HCITOOL: cleared (code " + code + ")");
+         
+          console.log("hcitool: killed (code " + code + ")");
+          
+          // Need to run this so scan returns actual results on Raspberry Pi devices
           hciToolDev = spawn('hcitool', ['dev']);
           
           return hciToolDev.on("exit", function(code) {
             
             if (code === 1) {
               
-              return console.log("HCITOOL DEV: exited, already running? (code 1)");
+              return console.log("hcitool dev: exited, already running? (code 1)");
             
             } else {
               
-              console.log("HCITOOL DEV: exited (code " + code + ")");
+              console.log("hcitool dev: done (code " + code + ")");
+              
+              // Start scan
+              console.log("hcitool scan: started...");
               hciToolScan = spawn('hcitool', ['scan']);
               
               hciToolScan.on("exit", function(code) {
                 
-                console.log("SCAN: exited (code " + code + ")");
+                console.log("hcitool scan: exited (code " + code + ")");
                 return instance = void 0;
               
               });
@@ -90,14 +100,8 @@ BluetoothScanner = (function() {
     if (!instance) {
       instance = init(hcidev, callback);
     }
-    instance;
+    return instance;
   }
-
-  filterHciDump = function(output) {
-    output = output.replace(/(\r\n|\n|\r)/gm, "");
-    output = output.replace(/\s+/g, " ");
-    return output = output.split(" ");
-  };
 
   return BluetoothScanner;
 
