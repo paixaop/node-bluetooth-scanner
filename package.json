@@ -1,6 +1,6 @@
 {
   "name": "bluetooth-scanner",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Bluetooth 4.0 LE scanner to find near by Bluetooth devices.",
   "main": "index.js",
   "scripts": {
