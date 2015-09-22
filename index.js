@@ -74,7 +74,7 @@ var BluetoothScanner = module.exports = function(hcidev) {
                   var re = /((?:[0-9A-F]{2}(?::|)){6})[\t\s]+([^\n\r]+)/gmi;
 
                   while( (result = re.exec(data)) ) {
-                    self.emit('device', result);
+                    self.emit('device', result[1], result[2]);
                   }
 
                 }
