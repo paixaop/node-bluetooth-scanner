@@ -1,0 +1,22 @@
+{
+  "name": "bluetooth-scanner",
+  "version": "1.0.1",
+  "description": "Bluetooth 4.0 LE scanner to find near by Bluetooth devices.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node tests/basic.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/paixaop/node-bluetooth-scanner"
+  },
+  "keywords": [
+    "bluetooth",
+    "scanner"
+  ],
+  "author": {
+    "name": "Pedro Paixao"
+  },
+  "license": "MIT",
+  "readmeFilename": "README.md"
+}

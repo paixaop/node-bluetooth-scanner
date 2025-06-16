@@ -1,0 +1,4 @@
+#!/bin/sh
+# Fake "test" only hcitool for platforms that do not support it
+echo device hci0 is UP
+sleep 1

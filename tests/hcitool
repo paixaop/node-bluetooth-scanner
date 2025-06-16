@@ -1,0 +1,16 @@
+#!/bin/sh
+# Fake "test" only hcitool for platforms that do not support it
+case $1 in
+  dev)
+    echo "Device"
+    echo "    00:00:00:00:00:00   fake"
+    ;;
+  scan)
+    echo Scanning ...
+    sleep 2
+    echo "    00:00:00:00:00:00   Device 0"
+    echo "    01:01:01:01:01:01   Device 1"
+    echo "    02:02:02:02:02:02   Device 2"
+    ;;
+esac
+sleep 2
